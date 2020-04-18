@@ -23,6 +23,9 @@ class CarDataset(Dataset):
         self.augment_transform = augment_transform
         self.mask_transform = mask_transform
 
+    def __len__(self):
+        return len(self.ids)
+
     def __getitem__(self, index):
         id = self.ids[index]
 
