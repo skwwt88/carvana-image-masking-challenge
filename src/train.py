@@ -16,6 +16,8 @@ from torch.utils.data import DataLoader, random_split
 
 from transforms import augment_transform, mask_transform
 
+dir_checkpoint = 'checkpointstrue/'
+
 def train_net(net,
               device,
               epochs=5,
@@ -82,6 +84,15 @@ def train_net(net,
 
                 pbar.update(imgs.shape[0])
                 global_step += 1
+
+            try:
+                os.mkdir(dir_checkpoint)
+                logging.info('Created checkpoint directory')
+            except OSError:
+                pass
+            torch.save(net.state_dict(),
+                       dir_checkpoint + f'CP_epoch{epoch + 1}.pth')
+            logging.info(f'Checkpoint {epoch + 1} saved !')
                 
 
     writer.close()
